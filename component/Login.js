@@ -27,6 +27,7 @@ export default class Login extends React.Component {
             <Image style={styles.imagesStyle} source={require('../imgs/icon.png')} />
           </View>
           <View style={styles.formStyle}>
+          
             <TextInput
               style={styles.inputStyle}
               onChangeText={(email) => this.setState({ email })}
