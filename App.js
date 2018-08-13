@@ -17,7 +17,8 @@ import Favorites from './client/component/Favorites';
 import Itinerary from "./client/component/Itinerary";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Profil from "./client/component/Profil";
-import Create from "./client/component/Create";
+import CreateItinerary from "./client/component/CreateItinerary";
+import CreateStop from './client/component/CreateStop';
 import Stops from "./client/component/Stops";
 import CommentStop from "./client/component/CommentStop";
 
@@ -27,8 +28,9 @@ const Tabs = createBottomTabNavigator(
   {
     Itinerary: Itinerary,
     Favorites: Favorites,
-    Create: Create,
-    Profil: Profil
+    CreateItinerary: CreateItinerary,
+    Profil: Profil,
+    CreateStop: CreateStop
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -39,14 +41,16 @@ const Tabs = createBottomTabNavigator(
           iconName = `ios-contact${focused ? "" : "-outline"}`;
         } else if (routeName === "Favorites") {
           iconName = `ios-folder${focused ? "" : "-outline"}`;
-        } else if (routeName === "Create") {
+        } else if (routeName === "CreateItinerary") {
           iconName = `ios-add-circle${focused ? "" : "-outline"}`;
         } else if (routeName === "Itinerary") {
           iconName = `ios-menu${focused ? "" : "-outline"}`;
+        } else if (routeName === "CreateStop") {
+          iconName = `ios-add-circle${focused ? "" : "-outline"}`;
         }
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
+        return <Ionicons name={iconName} size={20} color={tintColor} />;
       }
     }),
     tabBarOptions: {

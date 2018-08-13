@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableHighlight,ScrollView } from 'react-native';
 
-export default class create extends React.Component {
+export default class CreateItinerary extends React.Component {
     static navigationOptions = {
-        title: 'Create',
+        title: 'CreateItinerary',
     };
   constructor(props) {
     super(props);
