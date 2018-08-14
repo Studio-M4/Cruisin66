@@ -31,6 +31,7 @@ import {
   Input
 } from "native-base";
 
+import MapView from 'react-native-maps';
 export default class CommentStop extends React.Component {
   static navigationOptions = {
     title: "Map directions"
@@ -42,21 +43,13 @@ export default class CommentStop extends React.Component {
 
   render() {
     return (
-        <CameraKitCamera
-        ref={cam => this.camera = cam}
-        style={{
-          flex: 1,
-          backgroundColor: 'white'
-        }}
-        cameraOptions={{
-          flashMode: 'auto',             // on/off/auto(default)
-          focusMode: 'on',               // off/on(default)
-          zoomMode: 'on',                // off/on(default)
-          ratioOverlay:'1:1',            // optional, ratio overlay on the camera and crop the image seamlessly
-          ratioOverlayColor: '#00000077' // optional
-        }}
-        onReadQRCode={(event) => console.log(event.nativeEvent.qrcodeStringValue)} // optional
-        
+      <MapView
+      initialRegion={{
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }}
       />
     );
   }
