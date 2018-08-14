@@ -24,6 +24,16 @@ import Stops from "./client/component/Stops";
 import CommentStop from "./client/component/CommentStop";
 import MapComponent from "./client/component/MapComponent";
 
+
+const TabsIcons = (isFocused) => (
+  {
+    Profil: `ios-contact${isFocused ? "" : "-outline"}`,
+    Favorites: `ios-folder${isFocused ? "" : "-outline"}`,
+    CreateItinerary: `ios-add-circle${isFocused ? "" : "-outline"}`,
+    CreateStop: `ios-add-circle${isFocused ? "" : "-outline"}`,
+    Itinerary: `ios-menu${isFocused ? "" : "-outline"}`,
+  }
+);
 // can't swipe createBottomTabNavigator 
 // createTabNavigator depreciate but can swip :)
 const Tabs = createBottomTabNavigator(
@@ -37,16 +47,7 @@ const Tabs = createBottomTabNavigator(
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === "Profil") {
-          iconName = `ios-contact${focused ? "" : "-outline"}`;
-        } else if (routeName === "Favorites") {
-          iconName = `ios-folder${focused ? "" : "-outline"}`;
-        } else if (routeName === "CreateItinerary") {
-          iconName = `ios-add-circle${focused ? "" : "-outline"}`;
-        } else if (routeName === "Itinerary") {
-          iconName = `ios-menu${focused ? "" : "-outline"}`;
-        }
+        const iconName = TabsIcons(focused)[routeName];
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
         return <Ionicons name={iconName} size={20} color={tintColor} />;
@@ -74,7 +75,8 @@ const AppStack = createStackNavigator({
 });
 // Auth navigator
 const AuthStack = createStackNavigator(
-  { Login: Login,
+  { 
+    Login: Login,
     Signup: Signup
   },
   {
