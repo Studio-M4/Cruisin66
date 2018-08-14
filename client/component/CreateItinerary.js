@@ -3,10 +3,22 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableHighlight, ScrollVie
 import Tcomb from 'tcomb-form-native';
 
 const { Form } = Tcomb.form;
+
+/**
+ * Dropdown list options. Key of property is the actual returned value.
+ */
+let Category = Tcomb.enums({
+  N: 'Natural Scene',
+  H: 'Hitorical Sites',
+  W: 'Wine trips'
+});
+/**
+ * Form storage object for 'tcomb-form-native'.
+ */
 const Itinerary = Tcomb.struct({
   title: Tcomb.String,
   description: Tcomb.String,
-  category: Tcomb.String
+  category: Category
 });
 
 export default class CreateItinerary extends React.Component {
@@ -16,13 +28,12 @@ export default class CreateItinerary extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('POOP');
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit() {
+  handleSubmit = () => {
     const value = this._form.getValue();
     console.log('value: ', value);
+    
   }
 
   render() {
