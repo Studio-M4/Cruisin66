@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, TextInput, TouchableHighlight, ScrollView, Button } from "react-native";
+import { StyleSheet, Text, View, Image, TextInput, TouchableHighlight, ScrollView, Button, CameraRoll } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 export default class CreateStop extends React.Component {
@@ -9,6 +9,8 @@ export default class CreateStop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {photos: []}
+
+    this._handleButtonPress = this._handleButtonPress.bind(this);
   }
 
   _handleButtonPress() {
@@ -17,10 +19,11 @@ export default class CreateStop extends React.Component {
       assetType: "Photos"
     })
       .then(r => {
+        console.log(r);
         this.setState({ photos: r.edges });
       })
       .catch(err => {
-        //Error Loading Images
+        console.log(err);
       });
   }
 
