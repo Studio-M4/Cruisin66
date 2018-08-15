@@ -9,16 +9,15 @@ const { Form } = Tcomb.form;
  * The actual data should be replaced by getCategories().
  */
 let Category = Tcomb.enums({
-  N: 'Natural Scene',
-  H: 'Hitorical Sites',
-  W: 'Wine trips'
+  '1': 'Natural Scene',
+  '2': 'Hitorical Sites',
+  '3': 'Wine trips'
 });
-
 /**
  * Form storage object for 'tcomb-form-native'.
  */
 const Itinerary = Tcomb.struct({
-  title: Tcomb.String,
+  name: Tcomb.String,
   description: Tcomb.String,
   category: Category
 });
@@ -35,9 +34,7 @@ export default class CreateItinerary extends React.Component {
   handleSubmit = () => {
     const valuesObj = this._form.getValue();
     console.log('Form values: ', valuesObj);
-    this.props.navigation.navigate("Stops", {
-      id: {}
-    });
+    this.createItinerary(valuesObj);
   }
 
   /**
