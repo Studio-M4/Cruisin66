@@ -8,23 +8,42 @@ export default class CreateStop extends React.Component {
   };
   constructor(props) {
     super(props);
-    this.state = {photos: []}
-
-    this._handleButtonPress = this._handleButtonPress.bind(this);
+    this.state = {
+      photos: [], 
+      ItineraryID: null, 
+      address: null,
+      description: null
+    };
   }
 
-  _handleButtonPress() {
-    CameraRoll.getPhotos({
-      first: 20,
-      assetType: "Photos"
+  handleSubmit = () => {
+    //createStop();
+    this.props.navigation.navigate('Stops', { id: {}});
+  }
+
+  /**
+   * Should be used to connect to endpoint for creating a Stop.
+   * @param {object} params - parameters for post request
+   */
+  createStop = (params) => {
+    return fetch('http://localhost:3000/stop', {
+      method: 'POST', 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
     })
-      .then(r => {
-        console.log("Imges back",r.edges);
-        this.setState({ photos: r.edges});
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    .then((res) => {
+      if (res.error) {
+        throw res.error;
+      }
+      // Should send ItineraryID to Stops component.
+      this.props.navigation.navigate('Stops', { id: res.json().id });
+    })
+    .catch((error) => {
+      console.log(error)
+    });
   }
 
   render() {
@@ -41,7 +60,8 @@ export default class CreateStop extends React.Component {
             renderDescription={row => row.description} // custom description render
             onPress={(data, details = null) => {
               // 'details' is provided when fetchDetails = true
-             // console.log(data, details);
+              console.log(data, details);
+              this.setState({address: data.description});
             }}
             getDefaultValue={() => ""}
             query={{
@@ -85,25 +105,11 @@ export default class CreateStop extends React.Component {
             numberOfLines={6}
             maxLength={100}
             placeholder={"What so special here?"}
+            style={styles.inputStyle}
+            onChangeText={description => this.setState({ description })}
+            value={this.state.description}
           />
-
-          <Button title="Load Images" onPress={this._handleButtonPress} />
-
-          <ScrollView>
-            <Image
-              // key={i}
-              style={{
-                width: 300,
-                height: 100
-              }}
-              // source={{ uri: p.node.image.uri }}
-            />
-            <Text>
-
-            should i see somting  {this.state.photos.image}
-            </Text>
-          </ScrollView>
-
+          <Button title="Create" onPress={this.handleSubmit}/>
         </View>
       </ScrollView>
     );
@@ -130,5 +136,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 10,
     width: 300
-  }
+  },
+  inputStyle: {
+    height: 40,
+    width: 300,
+    borderColor: "#ccc",
+    borderWidth: 0.4,
+    paddingLeft: 10,
+    marginTop: 10,
+    backgroundColor: 'white'
+  },
 });

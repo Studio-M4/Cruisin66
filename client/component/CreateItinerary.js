@@ -6,12 +6,14 @@ const { Form } = Tcomb.form;
 
 /**
  * Dropdown list options. Key of property is the actual returned value.
+ * The actual data should be replaced by getCategories().
  */
 let Category = Tcomb.enums({
   N: 'Natural Scene',
   H: 'Hitorical Sites',
   W: 'Wine trips'
 });
+
 /**
  * Form storage object for 'tcomb-form-native'.
  */
@@ -31,9 +33,58 @@ export default class CreateItinerary extends React.Component {
   }
 
   handleSubmit = () => {
-    const value = this._form.getValue();
-    console.log('value: ', value);
-    
+    const valuesObj = this._form.getValue();
+    console.log('Form values: ', valuesObj);
+    this.props.navigation.navigate("Stops", {
+      id: {}
+    });
+  }
+
+  /**
+   * Get all the categories from server.
+   */
+  getCategories = () => {
+    return fetch('http://localhost:3000/categories', {
+      method: 'GET', 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((res) => {
+      if (res.error) {
+        throw res.error;
+      }
+      return res.json();
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+  }
+
+  /**
+   * Should be used to connect to endpoint for creating an Itinerary.
+   * @param {object} params - parameters for post request
+   */
+  createItinerary = (params) => {
+    return fetch('http://localhost:3000/itinerary', {
+      method: 'POST', 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
+    })
+    .then((res) => {
+      if (res.error) {
+        throw res.error;
+      }
+      // Should send ItineraryID to Stops component.
+      this.props.navigation.navigate('Stops', { id: res.json().id });
+    })
+    .catch((error) => {
+      console.log(error)
+    });
   }
 
   render() {
