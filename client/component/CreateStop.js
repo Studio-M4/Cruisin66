@@ -10,15 +10,18 @@ export default class CreateStop extends React.Component {
     super(props);
     this.state = {
       photos: [], 
-      ItineraryID: null, 
+      itineraryId: null, 
       address: null,
-      description: null
+      description: null,
+      name: null
     };
   }
 
   handleSubmit = () => {
-    //createStop();
-    this.props.navigation.navigate('Stops', { id: {}});
+    const {name, address, description} = this.state;
+    this.createStop({name, address, description})
+        .then((itineraryId) => this.props.navigation.navigate('Stops', {itineraryId}))
+        .catch((err) => console.log(err));
   }
 
   /**
@@ -38,8 +41,8 @@ export default class CreateStop extends React.Component {
       if (res.error) {
         throw res.error;
       }
-      // Should send ItineraryID to Stops component.
-      this.props.navigation.navigate('Stops', { id: res.json().id });
+      // Should send itineraryId to Stops component.
+      return 1; // This is a hardcoded itineraryId for testing.
     })
     .catch((error) => {
       console.log(error)
@@ -61,7 +64,11 @@ export default class CreateStop extends React.Component {
             onPress={(data, details = null) => {
               // 'details' is provided when fetchDetails = true
               console.log(data, details);
-              this.setState({address: data.description});
+              const fullInfo = data.description;
+              const name = fullInfo.split(',')[0];
+              const address = fullInfo.split(',')[1];
+              console.log(address);
+              this.setState({ name: name, address: address });
             }}
             getDefaultValue={() => ""}
             query={{

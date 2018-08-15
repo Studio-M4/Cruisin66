@@ -44,6 +44,8 @@ app.post('/stop', require('./routes/createStop.js'));
 app.get('/stops', require('./routes/getStops.js'));
 app.get('/stop', require('./routes/getStopById.js'));
 
+app.get('/categories', require('./routes/getCategories.js'));
+
 if (!module.parent) {
   app.listen(app.get('port'));
   console.log('Listening on', app.get('port'));
