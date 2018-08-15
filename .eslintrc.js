@@ -1,4 +1,3 @@
 module.exports = {
-  "extends": "airbnb-base"
+    "extends": "airbnb"
 };
-
