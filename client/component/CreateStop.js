@@ -13,14 +13,22 @@ export default class CreateStop extends React.Component {
       itineraryId: null, 
       address: null,
       description: null,
-      name: null
+      name: null,
     };
   }
 
+  componentDidMount() {
+    const { navigation } = this.props;
+    // This itineraryId is passed from Stops component.
+    const itineraryId = navigation.getParam('itineraryId');
+    this.setState({itineraryId});
+  }
+
   handleSubmit = () => {
-    const {name, address, description} = this.state;
-    this.createStop({name, address, description})
-        .then((itineraryId) => this.props.navigation.navigate('Stops', {itineraryId}))
+    const {name, address, description, itineraryId} = this.state;
+    console.log(itineraryId);
+    this.createStop({name, address, description, itineraryId})
+        .then((itineraryId) => this.props.navigation.navigate('Stops', {itineraryId: itineraryId}))
         .catch((err) => console.log(err));
   }
 
@@ -41,8 +49,7 @@ export default class CreateStop extends React.Component {
       if (res.error) {
         throw res.error;
       }
-      // Should send itineraryId to Stops component.
-      return 1; // This is a hardcoded itineraryId for testing.
+      return params.itineraryId;
     })
     .catch((error) => {
       console.log(error)
@@ -65,10 +72,7 @@ export default class CreateStop extends React.Component {
               // 'details' is provided when fetchDetails = true
               console.log(data, details);
               const fullInfo = data.description;
-              const name = fullInfo.split(',')[0];
-              const address = fullInfo.split(',')[1];
-              console.log(address);
-              this.setState({ name: name, address: address });
+              this.setState({ name: getName(fullInfo), address: getAddress(fullInfo) });
             }}
             getDefaultValue={() => ""}
             query={{
@@ -103,7 +107,7 @@ export default class CreateStop extends React.Component {
               "locality",
               "administrative_area_level_3"
             ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-            debounce={1000} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+            debounce={800} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
           />
           <Text style={styles.title}> Description: </Text>
           <TextInput
@@ -121,6 +125,20 @@ export default class CreateStop extends React.Component {
       </ScrollView>
     );
   }
+}
+
+/**
+ * Get location address from google api info.
+ */
+const getAddress = (info) => {
+  return info.split(',').slice(1).join(',');
+};
+
+/**
+ * Get location name from google api info.
+ */
+const getName = (info) => {
+  return info.split(',')[0];
 }
 
 const styles = StyleSheet.create({

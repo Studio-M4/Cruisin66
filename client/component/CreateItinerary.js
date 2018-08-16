@@ -35,7 +35,7 @@ export default class CreateItinerary extends React.Component {
     const valuesObj = this._form.getValue();
     console.log('Form values: ', valuesObj);
     this.createItinerary(valuesObj)
-        .then((itineraryId) => this.props.navigation.navigate('Stops', itineraryId))
+        .then((itinerary) => this.props.navigation.navigate('Stops', {itineraryId: itinerary.id}))
         .catch((err) => console.log(err));
   }
 
@@ -78,11 +78,10 @@ export default class CreateItinerary extends React.Component {
       if (res.error) {
         throw res.error;
       }
-      // Should return itineraryID, so that we can pass it to Stops component.
-      return 1; // 1 is a hardcoded itineraryId just for testing.
+      return res.json(); // this is the created itinerary object.
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
     });
   }
 

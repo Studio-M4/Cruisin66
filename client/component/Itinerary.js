@@ -135,7 +135,7 @@ export default class Itinerary extends React.Component {
                 onPress={() => {
                   /* 1. Navigate to the Details route with params */
                   this.props.navigation.navigate("Stops", {
-                    id: item
+                    itinerary: item
                   });
                 }}
               >
@@ -171,7 +171,7 @@ export default class Itinerary extends React.Component {
                           onPress={() => {
                             /* 1. Navigate to the Details route with params */
                             this.props.navigation.navigate("CommentStop", {
-                              id: item
+                              itinerary: item
                             });
                           }}>4 Comments</Text>
                       </Button>
