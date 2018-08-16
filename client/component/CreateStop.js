@@ -26,7 +26,7 @@ export default class CreateStop extends React.Component {
 
   handleSubmit = () => {
     const {name, address, description, itineraryId} = this.state;
-    console.log(itineraryId);
+    console.log('ITINERARY_ID', itineraryId);
     this.createStop({name, address, description, itineraryId})
         .then((itineraryId) => this.props.navigation.navigate('Stops', {itineraryId: itineraryId}))
         .catch((err) => console.log(err));

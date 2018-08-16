@@ -35,6 +35,7 @@ const getStopById = (query, callback) => {
 };
 
 const createStop = (newStop, itineraryId, callback) => {
+  console.log('ITINERARY_ID ', itineraryId);
   db.Stop.create(newStop)
     .then(createdStop => createdStop
       .setItineraries([itineraryId])

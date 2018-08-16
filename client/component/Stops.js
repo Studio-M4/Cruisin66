@@ -46,7 +46,7 @@ class Stops extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itinerayId: null, 
+      itineraryId: null, 
       modalVisible: false
     };
   }
@@ -54,8 +54,8 @@ class Stops extends React.Component {
   componentDidMount() {
     const { navigation } = this.props;
     // This is passed from Itinerary component.
-    const itinerayId = navigation.getParam('itinerary').id;
-    this.setState({ itinerayId });
+    const itineraryId = navigation.getParam('itinerary').id;
+    this.setState({ itineraryId });
   }
 
   getStopsById = () => {
@@ -169,7 +169,7 @@ class Stops extends React.Component {
             <Button
               onPress={() => {
                 /* 1. Navigate map and see the direction */
-                this.props.navigation.navigate("CreateStop", {itineraryId: this.state.itinerayId})
+                this.props.navigation.navigate("CreateStop", {itineraryId: this.state.itineraryId})
               }}
             >
               <Icon name="add" />
