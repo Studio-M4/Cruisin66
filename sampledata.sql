@@ -17,7 +17,7 @@ VALUES
 INSERT INTO itineraries (name, description, categoryId, userId, createdat, updatedat)
 -- VALUES ('Pacific Coast Highway Tour', 'beautiful spots along the famous Pacific Coast highway', 1, 1, NOW(), NOW());
 VALUES 
-('NYC Pizza Time', 'talks too much', 3, 1, NOW(), NOW()),
+('NYC Pizza Time', 'scrum master', 3, 1, NOW(), NOW()),
 ('Super cool tour name', 'likes to wear beanies', 2, 2, NOW(), NOW()),
 ('Taiwan 101', 'from the land of pineapple cakes', 3, 3, NOW(), NOW()),
 ('Bay Area Tour', 'master pepper', 1, 4, NOW(), NOW());
