@@ -109,7 +109,7 @@ getCategories().then((categories) => {
   Itinerary = Tcomb.struct({
     name: Tcomb.String,
     description: Tcomb.String,
-    category: Tcomb.enums(categories)
+    CategoryId: Tcomb.enums(categories)
   });
 });
 
